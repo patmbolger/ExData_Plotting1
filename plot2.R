@@ -1,0 +1,18 @@
+input_data <- read.csv2('data/household_power_consumption.csv', stringsAsFactors=FALSE, na.strings='?')
+dates <- input_data$Date
+times <- input_data$Time
+dt <- paste(dates, times)
+input_data$Time <- strptime(dt, "%d/%m/%Y %H:%M:%S")
+input_data$Date <- as.Date(data$Date, "%d/%m/%Y")
+rdata <- subset(input_data, Date >= '2007-02-01' & Date <= '2007-02-02')
+rdata$Global_active_power <- as.numeric(rdata$Global_active_power)
+rdata$Global_reactive_power <- as.numeric(rdata$Global_reactive_power)
+rdata$Voltage <- as.numeric(rdata$Voltage)
+rdata$Global_intensity <- as.numeric(rdata$Global_intensity)
+rdata$Sub_metering_1 <- as.numeric(rdata$Sub_metering_1)
+rdata$Sub_metering_2 <- as.numeric(rdata$Sub_metering_2)
+rdata$Sub_metering_3 <- as.numeric(rdata$Sub_metering_3)
+par(mfrow = c(1,1))
+with(rdata, plot(Time, Global_active_power, type='l', ylab='Global Active Power (kilowatts)', xlab=''))
+dev.copy(png, file='plot2.png', width=480, height=480)
+dev.off()
